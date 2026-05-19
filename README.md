@@ -109,7 +109,7 @@ Thunderbird
 |---|---|
 | Bichon URL | `http://192.168.1.50:15630` |
 | API Endpoint | `/api/v1/import` |
-| Account ID | `8416659527311215` |
+| Account ID | `your_id` |
 | Archive Folder | `Thunderbird` |
 | Auth Mode | `Authorization: Bearer TOKEN` |
 
@@ -259,7 +259,7 @@ Payload:
 
 ```json
 {
-  "account_id": 8416659527311215,
+  "account_id": your_id,
   "mail_folder": "Thunderbird",
   "emls": [
     "BASE64_URL_SAFE_EML_WITH_PADDING"
