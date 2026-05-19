@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/logo-readme.png" alt="Bichon Thunderbird Archiver logo" width="360" />
+  <img src="logo-bichon-extension.png" alt="Bichon Thunderbird Archiver logo" width="360" />
 </p>
 
 <h1 align="center">Bichon Thunderbird Archiver</h1>
