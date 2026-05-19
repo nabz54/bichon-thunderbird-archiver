@@ -1,0 +1,47 @@
+{
+  "manifest_version": 2,
+  "name": "Bichon Archiver",
+  "description": "Archive Thunderbird emails into Bichon API using URL-safe Base64 with padding.",
+  "version": "1.0.4",
+  "author": "Nabil / ChatGPT",
+  "applications": {
+    "gecko": {
+      "id": "bichon-archiver-api@local",
+      "strict_min_version": "128.0"
+    }
+  },
+  "icons": {
+    "16": "icons/bichon-16.png",
+    "32": "icons/bichon-32.png",
+    "48": "icons/bichon-48.png",
+    "64": "icons/bichon-64.png",
+    "128": "icons/bichon-128.png"
+  },
+  "permissions": [
+    "messagesRead",
+    "messagesModify",
+    "storage",
+    "menus",
+    "notifications",
+    "activeTab",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "browser_action": {
+    "default_title": "Archiver vers Bichon",
+    "default_icon": {
+      "16": "icons/bichon-16.png",
+      "32": "icons/bichon-32.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": false,
+    "open_in_tab": true
+  }
+}

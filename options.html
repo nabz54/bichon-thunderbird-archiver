@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Bichon Archiver - Configuration</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main class="card">
+    <header class="header">
+      <img src="icons/bichon-64.png" alt="">
+      <div>
+        <h1>Bichon Archiver</h1>
+        <p>Import direct vers Bichon via l’API officielle <code>POST /api/v1/import</code>.</p>
+      </div>
+    </header>
+
+    <section class="grid">
+      <div>
+        <label for="bichonBaseUrl">URL du serveur Bichon</label>
+        <input id="bichonBaseUrl" placeholder="http://192.168.1.50:15630">
+        <p class="hint">Exemple : <code>http://IP_DE_TA_VM:15630</code>, sans slash final.</p>
+      </div>
+
+      <div>
+        <label for="apiPath">Endpoint API d’import</label>
+        <input id="apiPath" placeholder="/api/v1/import">
+        <p class="hint">Endpoint officiel OpenAPI Bichon : <code>/api/v1/import</code>.</p>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div>
+        <label for="accountId">ID du compte Bichon</label>
+        <input id="accountId" placeholder="1">
+        <p class="hint">L’API demande <code>account_id</code>. Mets l’ID du compte cible.</p>
+      </div>
+
+      <div>
+        <label for="mailFolder">Dossier d’archive</label>
+        <input id="mailFolder" placeholder="Thunderbird">
+        <p class="hint">Exemples : <code>Thunderbird</code>, <code>Archives Thunderbird</code>, <code>Import manuel</code>.</p>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div>
+        <label for="token">Token/API key</label>
+        <input id="token" type="password" placeholder="Token Bichon optionnel selon configuration">
+      </div>
+
+      <div>
+        <label for="authMode">Mode d’authentification</label>
+        <select id="authMode">
+          <option value="bearer">Authorization: Bearer TOKEN</option>
+          <option value="x-api-token">X-API-Token: TOKEN</option>
+          <option value="x-auth-token">X-Auth-Token: TOKEN</option>
+          <option value="raw-authorization">Authorization: valeur brute</option>
+          <option value="none">Aucun header</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="check">
+      <input id="markAsReadAfterArchive" type="checkbox">
+      <label for="markAsReadAfterArchive">Marquer comme lu après archivage réussi</label>
+    </section>
+
+    <section class="check">
+      <input id="debugMode" type="checkbox" checked>
+      <label for="debugMode">Mode debug détaillé</label>
+    </section>
+
+    <section class="actions">
+      <button id="save" class="primary">Enregistrer</button>
+      <button id="test">Tester Bichon</button>
+      <button id="accounts">Lister les comptes</button>
+    </section>
+
+    <pre id="status">Prêt.</pre>
+
+    <section class="help">
+      <h2>Payload envoyé</h2>
+      <pre id="payloadPreview">Chargement...</pre>
+      <p class="hint">Cet aperçu se met à jour automatiquement quand tu modifies l’Account ID ou le dossier cible.</p>
+    </section>
+  </main>
+
+  <script src="options.js"></script>
+</body>
+</html>

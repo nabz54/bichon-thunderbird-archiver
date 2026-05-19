@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="box">
+    <div class="top">
+      <img src="icons/bichon-48.png" alt="">
+      <div>
+        <h1>Bichon</h1>
+        <p>Archivage Thunderbird · API</p>
+      </div>
+    </div>
+
+    <button id="archive" class="primary">Archiver la sélection</button>
+    <button id="options">Configurer</button>
+    <button id="copyDebug">Copier le diagnostic</button>
+
+    <div id="status" class="status">Prêt.</div>
+    <pre id="debug"></pre>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
