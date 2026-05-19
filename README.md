@@ -43,7 +43,7 @@ Payload sent to Bichon:
 
 ```json
 {
-  "account_id": 8416659527311215,
+  "account_id": 1,
   "mail_folder": "Thunderbird",
   "emls": ["BASE64_URL_SAFE_EML"]
 }
@@ -93,9 +93,9 @@ Open the extension options and configure:
 
 | Field | Example |
 |---|---|
-| Bichon URL | `http://192.168.1.50:15630` |
+| Bichon URL | `http://X.X.X.X:15630` |
 | API endpoint | `/api/v1/import` |
-| Account ID | `8416659527311215` |
+| Account ID | `1` |
 | Mail folder | `Thunderbird` |
 | Token | your Bichon access token |
 | Auth mode | `Authorization: Bearer TOKEN` |
