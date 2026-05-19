@@ -1,217 +1,171 @@
 # Bichon Thunderbird Archiver
 
-<div align="center">
+<p align="center">
+  <img src="./assets/logo-readme.png" alt="Bichon Thunderbird Archiver logo" width="340" />
+</p>
 
-# 📦 Bichon Thunderbird Archiver
+<p align="center">
+  <strong>Archive Thunderbird emails directly into Bichon using the official API.</strong>
+</p>
 
-### Archive Thunderbird emails directly into Bichon using the official API
-
-<img src="./icons/bichon-128.png" width="128" alt="Bichon Thunderbird Archiver Logo" />
-
-![Thunderbird](https://img.shields.io/badge/Thunderbird-140+-0A84FF?style=for-the-badge\&logo=thunderbird\&logoColor=white)
-![Rust](https://img.shields.io/badge/Bichon-Rust-orange?style=for-the-badge\&logo=rust)
-![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
-![Status](https://img.shields.io/badge/status-Experimental-yellow?style=for-the-badge)
-![Self Hosted](https://img.shields.io/badge/self--hosted-ready-blueviolet?style=for-the-badge)
-
-</div>
+<p align="center">
+  <img src="https://img.shields.io/badge/Thunderbird-140%2B-0A84FF?style=for-the-badge&logo=thunderbird&logoColor=white" alt="Thunderbird 140+" />
+  <img src="https://img.shields.io/badge/Bichon-1.x-2563EB?style=for-the-badge" alt="Bichon 1.x" />
+  <img src="https://img.shields.io/badge/API-OpenAPI-85EA2D?style=for-the-badge&logo=openapiinitiative&logoColor=black" alt="OpenAPI" />
+  <img src="https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge" alt="MIT License" />
+</p>
 
 ---
 
-# 🚀 Overview
+## Overview
 
-**Bichon Thunderbird Archiver** is a Thunderbird WebExtension allowing users to archive emails directly into a self-hosted Bichon instance using the official Bichon REST API.
+**Bichon Thunderbird Archiver** is a Thunderbird WebExtension that lets users archive selected emails directly into a self-hosted [Bichon](https://github.com/rustmailer/bichon) server.
 
-The extension extracts the raw EML content from Thunderbird, converts it into a Bichon-compatible Base64 format, and sends it to:
+The extension extracts selected Thunderbird emails as raw EML messages, converts them into the Base64 format expected by Bichon, and sends them to the official Bichon import endpoint:
 
 ```http
 POST /api/v1/import
 ```
 
-This project was built while experimenting with:
-
-* self-hosted email archiving;
-* Bichon native deployment;
-* Thunderbird API integration;
-* EML import automation;
-* API-driven archival workflows.
+The goal is simple: make Bichon email archiving accessible from Thunderbird with a clean, user-friendly workflow.
 
 ---
 
-# ✨ Features
+## What problem does it solve?
 
-## Current Features
+Bichon is a powerful self-hosted email archiving solution, but importing messages manually can be less convenient for end users.
 
-✅ Thunderbird 140+ support
-✅ Native Bichon API integration
-✅ Multi-mail selection
-✅ Direct EML extraction
-✅ User-friendly popup UI
-✅ Configurable Bichon URL
-✅ API token support
-✅ Configurable account ID
-✅ Configurable archive folder
-✅ Detailed debug mode
-✅ URL-safe Base64 compatibility for Bichon
-✅ Notifications
-✅ CORS-compatible architecture
+This extension allows users to archive emails directly from Thunderbird:
+
+```text
+Select email → Click Bichon icon → Archive to Bichon
+```
+
+No manual EML export.  
+No command-line import.  
+No copy/paste workflow.
 
 ---
 
-# 🏗️ Architecture
+## Features
+
+- Thunderbird 140+ support.
+- Direct integration with the Bichon REST API.
+- Uses the official Bichon import endpoint.
+- Archives one or multiple selected messages.
+- Extracts raw EML using Thunderbird WebExtension APIs.
+- User-configurable Bichon server URL.
+- User-configurable account ID.
+- User-configurable archive folder.
+- API token authentication.
+- User-friendly popup.
+- Options page.
+- Detailed debug report.
+- Custom logo and icons.
+- Base64 URL-safe encoding with padding for Bichon compatibility.
+
+---
+
+## Architecture
 
 ```text
 Thunderbird
     ↓
-messages.getRaw()
+Selected message(s)
     ↓
-EML Extraction
+browser.messages.getRaw()
     ↓
-Base64 URL-safe conversion
+Raw EML extraction
     ↓
-Bichon REST API
+Base64 URL-safe encoding with padding
     ↓
-/api/v1/import
+POST /api/v1/import
     ↓
 Bichon Server
+    ↓
+Archived mail
 ```
 
 ---
 
-# 📸 Screenshots
+## Bichon API endpoint
 
-> Add your screenshots here.
-
-Suggested screenshots:
-
-* Thunderbird popup;
-* extension configuration page;
-* Bichon WebUI;
-* successful import;
-* debug mode;
-* Thunderbird mail selection.
-
----
-
-# 🧠 Why this project?
-
-Bichon already exposes a powerful import API, but there was no native Thunderbird integration.
-
-The goal of this project is to:
-
-* simplify mail archival;
-* improve interoperability;
-* enable one-click archival from Thunderbird;
-* provide a lightweight self-hosted archival workflow.
-
-This extension transforms Thunderbird into a direct ingestion source for Bichon.
-
----
-
-# ⚙️ Requirements
-
-## Thunderbird
-
-* Thunderbird 140 or newer.
-
-## Bichon
-
-* Bichon Server 1.x.
-* Configured mail account.
-* API access token.
-* Correct CORS configuration.
-
-## Server
-
-Works perfectly on:
-
-* Debian 13;
-* Ubuntu Server;
-* lightweight VMs;
-* self-hosted homelab environments.
-
----
-
-# 🔐 Authentication
-
-The extension supports:
+The extension uses:
 
 ```http
-Authorization: Bearer TOKEN
+POST /api/v1/import
+Authorization: Bearer <token>
+Content-Type: application/json; charset=utf-8
 ```
 
-Example:
+Payload example:
 
-```http
-Authorization: Bearer eyJ...
+```json
+{
+  "account_id": 8416659527311215,
+  "mail_folder": "Thunderbird",
+  "emls": [
+    "BASE64_URL_SAFE_EML_WITH_PADDING"
+  ]
+}
 ```
 
 ---
 
-# 🌐 Bichon CORS Configuration
+## Important Base64 compatibility note
 
-One of the most important parts of the setup is CORS.
+During testing, Bichon rejected:
 
-The extension communicates from a Thunderbird origin such as:
+- standard Base64 containing `/`;
+- URL-safe Base64 without padding.
+
+The working format is:
 
 ```text
-moz-extension://xxxxxxxx
++  →  -
+/  →  _
+=  is kept as padding
 ```
 
-while the WebUI runs on:
+So the extension sends **Base64 URL-safe with padding**.
+
+---
+
+## Requirements
+
+### Client
+
+- Thunderbird 140 or newer.
+
+### Server
+
+- Bichon Server 1.x.
+- A configured Bichon account.
+- A valid Bichon access token.
+- Network access from Thunderbird to the Bichon server.
+- Correct CORS configuration.
+
+---
+
+## Installation
+
+### Development / temporary installation
+
+1. Download or clone this repository.
+2. Open Thunderbird.
+3. Go to:
 
 ```text
-http://YOUR_SERVER_IP:15630
+Tools → Add-ons and Themes → Gear icon → Debug Add-ons
 ```
 
-Bichon must therefore allow both origins.
-
-Example:
-
-```ini
-BICHON_CORS_ORIGINS=http://192.168.1.50:15630,moz-extension://xxxxxxxx
-```
-
-Restart Bichon:
-
-```bash
-sudo systemctl restart bichon
-```
-
----
-
-# 📥 Installation
-
-# Development Installation
-
-## 1. Clone repository
-
-```bash
-git clone https://github.com/YOUR_USERNAME/bichon-thunderbird-archiver.git
-```
-
----
-
-## 2. Open Thunderbird
-
-Go to:
-
-```text
-Tools
-→ Add-ons and Themes
-→ ⚙
-→ Debug Add-ons
-```
-
----
-
-## 3. Load extension
+4. Click:
 
 ```text
 Load Temporary Add-on
 ```
 
-Then select:
+5. Select:
 
 ```text
 manifest.json
@@ -219,108 +173,96 @@ manifest.json
 
 ---
 
-# 📦 Persistent Installation
+## Configuration
 
-You can also install the ZIP directly:
+Open the extension options and configure:
 
-```text
-Add-ons
-→ Install Add-on From File
-```
+| Field | Example |
+|---|---|
+| Bichon URL | `http://192.168.1.50:15630` |
+| API endpoint | `/api/v1/import` |
+| Account ID | `8416659527311215` |
+| Folder | `Thunderbird` |
+| Token | your Bichon access token |
+| Auth mode | `Authorization: Bearer TOKEN` |
 
-This helps stabilize the `moz-extension://` identifier.
+Important: when using the Bearer mode, paste only the token itself. Do not paste `Bearer` in the token field.
 
----
-
-# ⚙️ Configuration
-
-| Parameter    | Example                       |
-| ------------ | ----------------------------- |
-| Bichon URL   | `http://192.168.1.50:15630`   |
-| API Endpoint | `/api/v1/import`              |
-| Account ID   | `8416659527311215`            |
-| Folder       | `Thunderbird`                 |
-| Token        | `your_api_token`              |
-| Auth Mode    | `Authorization: Bearer TOKEN` |
-
----
-
-# 📨 Import Payload
-
-The extension sends:
-
-```json
-{
-  "account_id": 8416659527311215,
-  "mail_folder": "Thunderbird",
-  "emls": [
-    "BASE64_URL_SAFE_EML"
-  ]
-}
-```
-
----
-
-# 🔬 Technical Discoveries
-
-During development, several interesting behaviors were identified.
-
-## Base64 Compatibility
-
-Bichon rejected:
-
-* standard Base64 containing `/`;
-* Base64 URL-safe without padding.
-
-Working encoding:
+Correct:
 
 ```text
-+ → -
-/ → _
-keep = padding
+Token: DqqEjFAdskXQL1CZvlSmuYDn
+Auth mode: Authorization: Bearer TOKEN
+```
+
+Incorrect:
+
+```text
+Token: Bearer DqqEjFAdskXQL1CZvlSmuYDn
+Auth mode: Authorization: Bearer TOKEN
 ```
 
 ---
 
-## Thunderbird Raw Message Extraction
+## CORS configuration
 
-The extension uses:
+Bichon must allow the Thunderbird extension origin and the WebUI origin.
 
-```javascript
-browser.messages.getRaw()
+Example:
+
+```ini
+BICHON_CORS_ORIGINS=http://192.168.1.50:15630,moz-extension://YOUR_EXTENSION_UUID
 ```
 
-with:
+Then restart Bichon:
 
-```javascript
-{
-  data_format: "File",
-  decrypt: true
-}
+```bash
+sudo systemctl restart bichon
 ```
 
-This provides native EML extraction.
+### Note about temporary extensions
+
+When loading the extension temporarily, Thunderbird may change the `moz-extension://...` origin after reloads or restarts.
+
+For a more stable setup, install the extension persistently or package/sign it.
 
 ---
 
-## Debug Mode
+## Usage
 
-The extension includes a complete diagnostic system.
-
-It logs:
-
-* selected message metadata;
-* EML size;
-* Base64 size;
-* HTTP requests;
-* API responses;
-* network errors;
-* CORS issues;
-* Thunderbird API failures.
+1. Select one or more emails in Thunderbird.
+2. Click the Bichon extension icon.
+3. Click **Archive selected messages**.
+4. Wait for the result notification.
+5. Open Bichon WebUI and check the configured folder.
 
 ---
 
-# 🛠️ Project Structure
+## Debugging
+
+The extension includes a detailed debug mode.
+
+The debug report includes:
+
+- selected message metadata;
+- EML extraction status;
+- EML size;
+- Base64 size;
+- encoding mode;
+- request URL;
+- request headers with masked token;
+- account ID;
+- target folder;
+- HTTP status;
+- Bichon response body;
+- Thunderbird API errors;
+- CORS/network errors.
+
+This makes troubleshooting much easier.
+
+---
+
+## Project structure
 
 ```text
 .
@@ -333,95 +275,88 @@ It logs:
 ├── options.css
 ├── options.js
 ├── icons/
+├── assets/
 ├── docs/
 ├── LICENSE
-└── README.md
+├── README.md
+└── package-extension.sh
 ```
 
 ---
 
-# 🧪 Tested Environment
+## Tested environment
 
-| Component      | Version |
-| -------------- | ------- |
-| Thunderbird    | 140     |
-| Bichon         | 1.x     |
-| Debian         | 13      |
-| Browser Engine | Gecko   |
-
----
-
-# 🔮 Future Ideas
-
-Potential future improvements:
-
-* automatic folder synchronization;
-* background archival;
-* drag-and-drop support;
-* OAuth authentication;
-* mail tagging;
-* automatic archival rules;
-* Bichon account auto-discovery;
-* Thunderbird context menu integration;
-* archive status indicators;
-* attachment-only import;
-* batch queue system;
-* signed Thunderbird release;
-* Thunderbird Add-ons Store publication.
+| Component | Version |
+|---|---|
+| Thunderbird | 140 |
+| Bichon | 1.x |
+| Debian | 13 |
+| Installation mode | Native Bichon server |
+| API | `/api/v1/import` |
 
 ---
 
-# 🤝 Contributing
+## Roadmap
 
-Contributions are welcome.
+Possible future improvements:
 
-Possible areas:
-
-* UI/UX improvements;
-* API compatibility;
-* Thunderbird compatibility;
-* testing;
-* documentation;
-* packaging/signing.
-
----
-
-# 📚 Resources
-
-## Bichon
-
-* [https://github.com/rustmailer/bichon](https://github.com/rustmailer/bichon)
-
-## Thunderbird Extension APIs
-
-* [https://developer.thunderbird.net/](https://developer.thunderbird.net/)
-* [https://webextension-api.thunderbird.net/](https://webextension-api.thunderbird.net/)
-
-## Mozilla WebExtensions
-
-* [https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions)
+- Stable packaged release.
+- Thunderbird Add-ons publication.
+- Automatic account discovery.
+- Better folder mapping.
+- Context menu integration.
+- Queue and retry system.
+- Archive status indicator.
+- Per-folder archive rules.
+- Bulk import progress bar.
+- OAuth/token helper.
+- Optional auto-archive rules.
+- Better signed release workflow.
+- Internationalization.
 
 ---
 
-# ❤️ Acknowledgements
+## Security notes
 
-Huge thanks to:
+This extension sends selected email content to the configured Bichon server.
 
-* the Bichon developers;
-* the Thunderbird team;
-* the Rust ecosystem;
-* the self-hosted/open-source community.
+Make sure that:
+
+- you trust the Bichon server;
+- you use HTTPS when exposing Bichon outside a trusted LAN;
+- you do not expose Bichon directly to the Internet without proper controls;
+- your API token is kept private;
+- CORS is configured intentionally.
+
+Recommended access patterns:
+
+- LAN only;
+- VPN;
+- Tailscale;
+- reverse proxy with HTTPS and authentication.
 
 ---
 
-# 📜 License
+## Disclaimer
+
+This project is an independent community project.
+
+It is not affiliated with, endorsed by, or sponsored by Mozilla, Thunderbird, or the Bichon project maintainers.
+
+Thunderbird is a trademark of the Mozilla Foundation.  
+Bichon belongs to its respective authors.
+
+---
+
+## License
 
 MIT License.
 
 ---
 
-# 🦀 Built with Rust ecosystem compatibility in mind
+## Credits
 
-```text
-Thunderbird ❤️ Bichon ❤️ Rust
-```
+- Bichon project maintainers.
+- Thunderbird team.
+- Mozilla WebExtension documentation.
+- Open-source and self-hosted communities.
